@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Section from "@/components/ui/Section";
-import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
 import { siteConfig } from "@/lib/site";
 import {
@@ -18,6 +17,9 @@ import {
     ShieldCheck
 } from "lucide-react";
 
+import { supabase } from "@/lib/supabase";
+import { sendInquiryEmail } from "@/app/actions/email";
+
 export default function ContactPage() {
     const [formData, setFormData] = useState({
         name: "",
@@ -28,11 +30,52 @@ export default function ContactPage() {
         message: "",
     });
     const [submitted, setSubmitted] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [error, setError] = useState<string | null>(null);
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        console.log("Consultation Inquiry:", formData);
-        setSubmitted(true);
+        setIsSubmitting(true);
+        setError(null);
+
+        try {
+            const { error: supabaseError } = await supabase
+                .from('contact_inquiries')
+                .insert([
+                    {
+                        name: formData.name,
+                        email: formData.email,
+                        company: formData.company,
+                        industry: formData.industry,
+                        project_scale: formData.projectScale,
+                        message: formData.message,
+                    },
+                ]);
+
+            if (supabaseError) throw supabaseError;
+
+            // 2. Send Email Notification
+            const emailResult = await sendInquiryEmail(formData);
+            if (!emailResult.success) {
+                console.warn("Email notification failed:", emailResult.error);
+            }
+
+            console.log("Consultation Inquiry processed successfully");
+            setSubmitted(true);
+            setFormData({
+                name: "",
+                email: "",
+                company: "",
+                industry: "SaaS",
+                projectScale: "MVP Development",
+                message: "",
+            });
+        } catch (err: any) {
+            console.error("Process Error:", err.message);
+            setError("Something went wrong. Please try again or email us directly.");
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -166,8 +209,12 @@ export default function ContactPage() {
                                         />
                                     </div>
 
-                                    <Button type="submit" variant="primary" size="lg" className="w-full py-8 text-lg rounded-xl">
-                                        Start Technical Consultation
+                                    {error && (
+                                        <p className="text-red-500 text-sm font-medium">{error}</p>
+                                    )}
+
+                                    <Button type="submit" variant="primary" size="lg" className="w-full py-8 text-lg rounded-xl" disabled={isSubmitting}>
+                                        {isSubmitting ? "Sending..." : "Start Technical Consultation"}
                                     </Button>
                                 </form>
                             )}
