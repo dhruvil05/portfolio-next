@@ -5,10 +5,10 @@ import Button from "@/components/ui/Button";
 export default function Hero() {
     return (
         <section className="relative overflow-hidden pt-16 md:pt-24 lg:pt-32 pb-16">
-            <div className="container px-4 md:px-6 mx-auto relative z-10">
-                <div className="grid gap-12 lg:grid-cols-2 lg:gap-8 items-center px-10">
+            <div className="container mx-auto px-6 sm:px-10 lg:px-12 max-w-7xl relative z-10">
+                <div className="grid gap-12 lg:grid-cols-2 lg:gap-8 items-center">
                     {/* Left Column: Typography */}
-                    <div className="flex flex-col justify-center space-y-8 text-center lg:text-left">
+                    <div className="flex flex-col justify-center space-y-8 text-center lg:text-left lg:pl-12 text-foreground">
                         <div className="space-y-4">
                             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tighter text-foreground">
                                 Building Digital <br className="hidden lg:block" />
