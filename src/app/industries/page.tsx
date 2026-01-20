@@ -1,126 +1,201 @@
 import { Metadata } from "next";
 import Section from "@/components/ui/Section";
-import Card from "@/components/ui/Card";
-import Badge from "@/components/ui/Badge";
 import Button from "@/components/ui/Button";
 import { generatePageSEO } from "@/lib/seo";
+import {
+    Layout,
+    ShieldCheck,
+    Activity,
+    Lock,
+    RefreshCcw,
+    Zap,
+    Users,
+    Server,
+    ShieldAlert,
+    CheckCircle2,
+    Database,
+    Globe,
+    CreditCard
+} from "lucide-react";
 
 export const metadata: Metadata = generatePageSEO(
     "Industries",
-    "Specialized web development for SaaS and Healthcare industries with deep domain expertise."
+    "Tailored engineering for SaaS and Healthcare. Specialized compliance and scalable architecture experts."
 );
 
-const industries = [
+const industryFocus = [
     {
         name: "SaaS & B2B Software",
-        intro: "I help SaaS companies build products that scale. From early-stage MVPs to enterprise-grade platforms, I understand the unique challenges of building software that serves multiple customers.",
-        problems: [
-            "Need to support multiple tenants with isolated data",
-            "Complex permission systems and user management",
-            "Integration with payment processors and billing systems",
-            "Scaling infrastructure as customer base grows",
+        icon: Layout,
+        intro: "We build scalable, multi-tenant B2B applications designed for longevity and user growth. Our engineering handles the complexity so your product team can focus on the roadmap.",
+        challenges: [
+            "Complex data models & granular permissions",
+            "Subscription lifecycle & billing complexity",
+            "Friction-heavy user onboarding",
+            "Critical API reliability and scaling"
         ],
-        solutions: [
-            "Multi-tenant architecture with data isolation",
-            "Role-based access control (RBAC) systems",
-            "Stripe, PayPal, and subscription management",
-            "Scalable cloud infrastructure on AWS/Azure",
+        outcomes: [
+            "Robust RBAC & Multi-tenant isolation",
+            "Seamless Stripe / LemonSqueezy integrations",
+            "Interactive, low-drop onboarding flows",
+            "Auto-scaling infrastructure & developer docs"
         ],
-        caseStudyLink: "/case-studies",
+        techHighlight: "Built for: Founders, Product Managers, and CTOs."
     },
     {
-        name: "Healthcare Operations",
-        intro: "Healthcare organizations need software that's not just functional, but secure and compliant. I build systems that streamline operations while meeting strict regulatory requirements.",
-        problems: [
-            "Managing sensitive patient data securely",
-            "Ensuring HIPAA compliance across all systems",
-            "Manual workflows that slow down care delivery",
-            "Integration with existing healthcare systems",
+        name: "Healthcare & MedTech",
+        icon: Activity,
+        intro: "Security is non-negotiable in Healthcare. We build compliant, secure, and user-friendly medical software that bridges the gap between complex data and clinical needs.",
+        challenges: [
+            "Strict HIPAA & GDPR data requirements",
+            "Legacy EHR/EMR integration silos",
+            "Clinical workflow fatigue & UI complexity",
+            "PHI data encryption and auditing"
         ],
-        solutions: [
-            "HIPAA-compliant data encryption and access controls",
-            "Automated audit logging and compliance monitoring",
-            "Workflow automation for scheduling, billing, and records",
-            "HL7/FHIR integration with EHR systems",
+        outcomes: [
+            "End-to-end AES-256 data encryption",
+            "HL7 / FHIR standard implementation",
+            "Optimized clinical dashboards & UX",
+            "Comprehensive audit logging & reporting"
         ],
-        caseStudyLink: "/case-studies",
-    },
+        techHighlight: "Built for: Health-Tech Startups, Clinics, and Labs."
+    }
+];
+
+const standards = [
+    { name: "HIPAA Compliant", icon: ShieldCheck },
+    { name: "SOC2 Mindset", icon: Lock },
+    { name: "GDPR Ready", icon: Globe },
+    { name: "FHIR/HL7 Standards", icon: RefreshCcw }
 ];
 
 export default function IndustriesPage() {
     return (
         <>
-            <Section className="bg-gradient-to-br from-primary-50 to-white">
-                <div className="max-w-3xl mx-auto text-center">
-                    <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-                        Industries I Serve
+            {/* Hero Section */}
+            <Section className="bg-background pt-32 pb-20">
+                <div className="max-w-4xl">
+                    <h1 className="text-4xl md:text-7xl font-bold tracking-tight text-foreground mb-8">
+                        Domain <span className="text-primary text-secondary">Expertise</span>
                     </h1>
-                    <p className="text-xl text-gray-600">
-                        Deep expertise in SaaS and Healthcare means I understand your challenges and speak your language
+                    <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-2xl">
+                        Industry-specific constraints shouldn&apos;t be a barrier to innovation. We speak your domain language and build solutions that meet your specific standards.
                     </p>
                 </div>
             </Section>
 
-            {industries.map((industry, index) => (
-                <Section key={index} className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}>
-                    <div className="max-w-4xl mx-auto">
-                        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-                            {industry.name}
-                        </h2>
-                        <p className="text-lg text-gray-600 mb-8">
-                            {industry.intro}
-                        </p>
+            {/* Compliance Bar */}
+            <div className="bg-muted/30 border-y border-border overflow-hidden">
+                <div className="container mx-auto px-6 py-6 lg:px-12 flex flex-wrap justify-between items-center gap-6">
+                    <span className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Engineering Standards:</span>
+                    <div className="flex flex-wrap items-center gap-x-8 gap-y-4">
+                        {standards.map((s, i) => (
+                            <div key={i} className="flex items-center gap-2 text-sm font-medium text-foreground/80">
+                                <s.icon size={18} className="text-primary" />
+                                {s.name}
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
 
-                        <div className="grid md:grid-cols-2 gap-8 mb-8">
-                            <Card>
-                                <h3 className="text-xl font-bold text-gray-900 mb-4">
-                                    Common Challenges
-                                </h3>
-                                <ul className="space-y-3">
-                                    {industry.problems.map((problem, idx) => (
-                                        <li key={idx} className="flex items-start">
-                                            <span className="text-red-500 mr-2 mt-1">⚠️</span>
-                                            <span className="text-gray-600">{problem}</span>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </Card>
-
-                            <Card>
-                                <h3 className="text-xl font-bold text-gray-900 mb-4">
-                                    My Solutions
-                                </h3>
-                                <ul className="space-y-3">
-                                    {industry.solutions.map((solution, idx) => (
-                                        <li key={idx} className="flex items-start">
-                                            <span className="text-green-500 mr-2 mt-1">✓</span>
-                                            <span className="text-gray-600">{solution}</span>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </Card>
+            {/* Industry Deep-Dives */}
+            {industryFocus.map((industry, index) => (
+                <Section key={index} className={index % 2 !== 0 ? "bg-muted/10" : "bg-background"}>
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+                        <div className="space-y-8">
+                            <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center text-primary">
+                                <industry.icon size={32} />
+                            </div>
+                            <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-foreground">
+                                {industry.name}
+                            </h2>
+                            <p className="text-lg text-muted-foreground leading-relaxed">
+                                {industry.intro}
+                            </p>
+                            <p className="text-sm font-bold text-primary italic">
+                                {industry.techHighlight}
+                            </p>
                         </div>
 
-                        <div className="text-center">
-                            <Button href={industry.caseStudyLink} variant="outline">
-                                See {industry.name} Projects
-                            </Button>
+                        <div className="grid grid-cols-1 gap-6">
+                            <div className="p-8 bg-background border border-border rounded-3xl space-y-6">
+                                <h3 className="text-sm font-bold uppercase tracking-widest text-red-500/80 flex items-center gap-2">
+                                    <ShieldAlert size={16} /> Market Challenges
+                                </h3>
+                                <ul className="space-y-4">
+                                    {industry.challenges.map((c, i) => (
+                                        <li key={i} className="flex items-start text-sm text-muted-foreground leading-snug">
+                                            <span className="mr-3 text-red-500">•</span>
+                                            {c}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+
+                            <div className="p-8 bg-primary/5 border border-primary/20 rounded-3xl space-y-6 shadow-sm">
+                                <h3 className="text-sm font-bold uppercase tracking-widest text-primary flex items-center gap-2">
+                                    <CheckCircle2 size={16} /> Technical Outcome
+                                </h3>
+                                <ul className="space-y-4">
+                                    {industry.outcomes.map((o, i) => (
+                                        <li key={i} className="flex items-start text-sm text-foreground font-medium leading-snug">
+                                            <span className="mr-3 text-primary">✓</span>
+                                            {o}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </Section>
             ))}
 
-            <Section className="bg-gradient-to-r from-primary-600 to-accent-600">
-                <div className="text-center text-primary py-8">
-                    <h2 className="text-3xl font-bold mb-4">
-                        Working in a Different Industry?
+            {/* Expertise Highlight Grid */}
+            <Section className="bg-foreground text-background">
+                <div className="max-w-3xl mb-16">
+                    <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-6">
+                        Engineering for Complexity
                     </h2>
-                    <p className="text-lg mb-8 opacity-90 max-w-2xl mx-auto">
-                        While I specialize in SaaS and Healthcare, I'm always open to discussing interesting projects in other domains
+                    <p className="text-xl opacity-70">
+                        How we solve the deep-level problems that define your industry.
                     </p>
-                    <Button href="/contact" variant="secondary" size="lg">
-                        Let's Talk
-                    </Button>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+                    {[
+                        { title: "Scalable RBAC", icon: Users, desc: "Building granular permission systems that grow with enterprise requirements." },
+                        { title: "Compliance Core", icon: Lock, desc: "Security isn't an addon; we build it into the foundational architecture." },
+                        { title: "Data Integrity", icon: Database, desc: "ACID compliant systems that ensure zero data loss in critical environments." }
+                    ].map((item, idx) => (
+                        <div key={idx} className="space-y-4">
+                            <div className="w-10 h-10 bg-primary/20 rounded-lg flex items-center justify-center text-primary">
+                                <item.icon size={20} />
+                            </div>
+                            <h4 className="text-xl font-bold">{item.title}</h4>
+                            <p className="text-sm opacity-60 leading-relaxed">{item.desc}</p>
+                        </div>
+                    ))}
+                </div>
+            </Section>
+
+            {/* Final CTA */}
+            <Section className="bg-background pt-24 pb-32">
+                <div className="max-w-4xl mx-auto text-center bg-muted/30 rounded-3xl p-12 border border-border">
+                    <h2 className="text-3xl font-bold mb-4 text-foreground">
+                        Have a specialized project?
+                    </h2>
+                    <p className="text-lg mb-8 text-muted-foreground max-w-2xl mx-auto">
+                        While we specialize in SaaS and Healthcare, we thrive on deep-level engineering challenges across any domain.
+                    </p>
+                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                        <Button href="/contact" variant="primary" size="lg">
+                            Get a Domain Consultation
+                        </Button>
+                        <Button href="/services" variant="outline" size="lg">
+                            Explore Capabilities
+                        </Button>
+                    </div>
                 </div>
             </Section>
         </>

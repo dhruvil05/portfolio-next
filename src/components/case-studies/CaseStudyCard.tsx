@@ -17,28 +17,31 @@ export default function CaseStudyCard({
     tags,
 }: CaseStudyCardProps) {
     return (
-        <Card>
-            <div className="mb-4">
-                <Badge variant="secondary">{industry}</Badge>
+        <Card hover={true} className="flex flex-col h-full bg-card">
+            <div className="mb-6 flex justify-between items-start">
+                <Badge variant="secondary" className="mb-2">{industry}</Badge>
             </div>
-            <h3 className="text-2xl font-bold text-gray-900 mb-3">{title}</h3>
 
-            <div className="space-y-4 mb-6">
+            <h3 className="text-2xl font-bold text-foreground mb-4">{title}</h3>
+
+            <div className="space-y-6 mb-8 flex-grow">
                 <div>
-                    <h4 className="text-sm font-semibold text-gray-700 mb-1">Challenge</h4>
-                    <p className="text-gray-600">{problem}</p>
+                    <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-widest mb-2">Challenge</h4>
+                    <p className="text-muted-foreground leading-relaxed">{problem}</p>
                 </div>
 
                 <div>
-                    <h4 className="text-sm font-semibold text-gray-700 mb-1">Result</h4>
-                    <p className="text-gray-600">{outcome}</p>
+                    <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-widest mb-2">Result</h4>
+                    <p className="text-foreground font-medium leading-relaxed">{outcome}</p>
                 </div>
             </div>
 
-            <div className="flex flex-wrap gap-2">
-                {tags.map((tag, idx) => (
-                    <Badge key={idx} variant="primary">{tag}</Badge>
-                ))}
+            <div className="pt-6 border-t border-border mt-auto">
+                <div className="flex flex-wrap gap-2">
+                    {tags.map((tag, idx) => (
+                        <Badge key={idx} variant="outline">{tag}</Badge>
+                    ))}
+                </div>
             </div>
         </Card>
     );

@@ -30,12 +30,12 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
         <div className="fixed inset-0 z-50 md:hidden">
             <div className="fixed inset-0 bg-black/50" onClick={onClose} />
 
-            <div className="fixed right-0 top-0 bottom-0 w-full max-w-sm bg-white shadow-xl">
-                <div className="flex items-center justify-between p-4 border-b">
-                    <span className="text-xl font-bold text-gray-900">Menu</span>
+            <div className="fixed right-0 top-0 bottom-0 w-full max-w-sm bg-background shadow-xl transition-colors duration-300">
+                <div className="flex items-center justify-between p-4 border-b border-border">
+                    <span className="text-xl font-bold text-foreground">Menu</span>
                     <button
                         onClick={onClose}
-                        className="p-2 text-gray-700 hover:text-primary-600"
+                        className="p-2 text-muted-foreground hover:text-primary transition-colors"
                         aria-label="Close menu"
                     >
                         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -44,7 +44,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                     </button>
                 </div>
 
-                <nav className="p-4 bg-white">
+                <nav className="p-4 bg-background">
                     <div className="space-y-2">
                         {navigationItems.map((item) => (
                             <Link
@@ -52,8 +52,8 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                                 href={item.href}
                                 onClick={onClose}
                                 className={`block px-4 py-3 rounded-lg text-base font-medium transition-colors ${pathname === item.href
-                                        ? "bg-primary-50 text-primary-600"
-                                        : "text-gray-700 hover:bg-gray-50"
+                                    ? "bg-primary/10 text-primary"
+                                    : "text-foreground/80 hover:bg-muted"
                                     }`}
                             >
                                 {item.label}

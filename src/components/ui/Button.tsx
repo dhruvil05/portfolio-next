@@ -19,18 +19,18 @@ export default function Button({
     className = "",
     type = "button",
 }: ButtonProps) {
-    const baseStyles = "inline-flex items-center justify-center font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2";
+    const baseStyles = "inline-flex items-center justify-center font-medium rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50";
 
     const variants = {
-        primary: "bg-primary-600 text-primary hover:bg-primary-700 focus:ring-primary-500 shadow-lg shadow-primary-500/30",
-        secondary: "bg-gray-800 text-white hover:bg-gray-900 focus:ring-gray-500",
-        outline: "border-2 border-primary-600 text-primary-600 hover:bg-primary-50 focus:ring-primary-500",
+        primary: "bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm",
+        secondary: "bg-muted text-muted-foreground hover:bg-muted/80",
+        outline: "border border-input bg-background hover:bg-muted hover:text-accent-foreground",
     };
 
     const sizes = {
-        sm: "px-4 py-2 text-sm",
-        md: "px-6 py-3 text-base",
-        lg: "px-8 py-4 text-lg",
+        sm: "h-9 px-4 text-sm",
+        md: "h-10 px-6 text-sm",
+        lg: "h-11 px-8 text-base",
     };
 
     const styles = `${baseStyles} ${variants[variant]} ${sizes[size]} ${className}`;

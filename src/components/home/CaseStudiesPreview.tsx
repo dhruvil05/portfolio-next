@@ -21,12 +21,12 @@ const caseStudies = [
 
 export default function CaseStudiesPreview() {
     return (
-        <Section className="bg-white">
-            <div className="text-center mb-12">
-                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+        <Section className="bg-background">
+            <div className="text-center mb-16 space-y-4">
+                <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-foreground">
                     Featured Projects
                 </h2>
-                <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
                     Real solutions delivering measurable results
                 </p>
             </div>
@@ -38,7 +38,7 @@ export default function CaseStudiesPreview() {
             </div>
 
             <div className="text-center">
-                <Button href="/case-studies" variant="outline">
+                <Button href="/case-studies" variant="outline" size="lg">
                     View All Case Studies
                 </Button>
             </div>

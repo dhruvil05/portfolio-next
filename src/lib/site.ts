@@ -1,13 +1,13 @@
 export const siteConfig = {
-  name: "Portfolio.",
-  title: "Freelance Developer | SaaS & Healthcare Solutions",
+  name: "Nova.",
+  title: "Digital Solutions Agency | SaaS & Healthcare Experts",
   description:
-    "Custom web applications for SaaS and Healthcare industries. Building scalable, secure solutions that drive business growth.",
-  url: "https://yourportfolio.com",
-  email: "your.email@example.com",
-  linkedin: "https://linkedin.com/in/yourprofile",
-  github: "https://github.com/yourprofile",
+    "We build custom web applications for SaaS and Healthcare industries. Scalable, secure solutions that drive business growth.",
+  url: "https://youragency.com",
+  email: "developer.build02@gmail.com",
+  linkedin: "https://linkedin.com/company/youragency",
+  github: "https://github.com/youragency",
   tagline: "Building Custom Web Solutions for SaaS & Healthcare",
   shortBio:
-    "Freelance developer specializing in custom web applications for SaaS and Healthcare industries.",
+    "A dedicated team of developers specializing in custom web applications for SaaS and Healthcare industries.",
 };
