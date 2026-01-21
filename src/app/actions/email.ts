@@ -24,7 +24,7 @@ export async function sendInquiryEmail(data: EmailData) {
     try {
         const response = await resend.emails.send({
             from: 'Nova Agency <onboarding@resend.dev>',
-            to: ['dhruvil.patel23117@gmail.com'],
+            to: ['dhruvil.work10@gmail.com'],
             subject: `New Technical Inquiry: ${data.name} - ${data.company}`,
             html: `
                 <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #e4e4e7; border-radius: 12px; padding: 32px; color: #09090b;">
