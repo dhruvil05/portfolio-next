@@ -1,6 +1,67 @@
 "use client";
 
 import Button from "@/components/ui/Button";
+import { useEffect, useState, useRef } from "react";
+
+interface StatItem {
+    label: string;
+    numericValue: number;
+    suffix: string;
+    decimals?: number;
+}
+
+const heroStats: StatItem[] = [
+    { label: "Expertise", numericValue: 5, suffix: "Y+" },
+    { label: "Projects", numericValue: 50, suffix: "+" },
+    { label: "Uptime", numericValue: 99.9, suffix: "%", decimals: 1 },
+    { label: "Client Satis.", numericValue: 100, suffix: "%" },
+];
+
+function AnimatedCounter({ target, suffix, decimals = 0, duration = 2000 }: { target: number, suffix: string, decimals?: number, duration?: number }) {
+    const [count, setCount] = useState(0);
+    const countRef = useRef<HTMLDivElement>(null);
+    const [isVisible, setIsVisible] = useState(false);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    setIsVisible(true);
+                    observer.disconnect();
+                }
+            },
+            { threshold: 0.1 }
+        );
+
+        if (countRef.current) {
+            observer.observe(countRef.current);
+        }
+
+        return () => observer.disconnect();
+    }, []);
+
+    useEffect(() => {
+        if (!isVisible) return;
+
+        let startTimestamp: number | null = null;
+        const step = (timestamp: number) => {
+            if (!startTimestamp) startTimestamp = timestamp;
+            const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+            setCount(progress * target);
+            if (progress < 1) {
+                window.requestAnimationFrame(step);
+            }
+        };
+        window.requestAnimationFrame(step);
+    }, [isVisible, target, duration]);
+
+    return (
+        <span ref={countRef}>
+            {count.toFixed(decimals)}
+            {suffix}
+        </span>
+    );
+}
 
 export default function Hero() {
     return (
@@ -28,24 +89,38 @@ export default function Hero() {
                         </div>
                     </div>
 
-                    {/* Right Column: Gradient Placeholder */}
-                    <div className="relative mx-auto w-full max-w-[500px] lg:max-w-none lg:h-[600px] flex items-center justify-center">
-                        {/* Abstract Gradient Blob Animation */}
-                        <div className="absolute top-0 -left-4 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob dark:bg-purple-900 dark:mix-blend-lighten"></div>
-                        <div className="absolute top-0 -right-4 w-72 h-72 bg-indigo-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000 dark:bg-indigo-900 dark:mix-blend-lighten"></div>
-                        <div className="absolute -bottom-8 left-20 w-72 h-72 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000 dark:bg-pink-900 dark:mix-blend-lighten"></div>
+                    {/* Right Column: Animated Stats Display */}
+                    <div className="relative mx-auto w-full max-w-[500px] lg:max-w-none flex items-center justify-center py-12 lg:py-0">
+                        {/* Background Blobs for depth */}
+                        <div className="absolute top-0 -left-4 w-72 h-72 bg-purple-100/50 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob"></div>
+                        <div className="absolute bottom-0 -right-4 w-72 h-72 bg-indigo-100/50 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-2000"></div>
 
-                        {/* Placeholder Card/Frame */}
-                        <div className="relative bg-card border border-border rounded-xl shadow-2xl p-8 w-full max-w-sm aspect-square flex items-center justify-center backdrop-blur-sm bg-opacity-80">
-                            <div className="text-center space-y-4">
-                                <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto">
-                                    <svg className="w-8 h-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                    </svg>
+                        {/* Interactive Stats Grid */}
+                        <div className="relative grid grid-cols-2 gap-4 w-full">
+                            {heroStats.map((stat, index) => (
+                                <div
+                                    key={index}
+                                    className="group relative p-8 bg-white/40 backdrop-blur-xl border border-zinc-200 rounded-3xl shadow-sm hover:shadow-md hover:border-primary/20 transition-all duration-300"
+                                >
+                                    <div className="space-y-2">
+                                        <div className="text-3xl md:text-4xl font-bold text-zinc-900 tracking-tight group-hover:text-primary transition-colors">
+                                            <AnimatedCounter
+                                                target={stat.numericValue}
+                                                suffix={stat.suffix}
+                                                decimals={stat.decimals}
+                                            />
+                                        </div>
+                                        <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-400 group-hover:text-zinc-600 transition-colors">
+                                            {stat.label}
+                                        </div>
+                                    </div>
+                                    {/* Decorative subtle pulse */}
+                                    <div className="absolute top-4 right-4 w-1.5 h-1.5 rounded-full bg-primary/20 group-hover:bg-primary group-hover:animate-pulse" />
                                 </div>
-                                <p className="text-sm text-muted-foreground uppercase tracking-widest font-semibold">Project Showcase</p>
-                                <p className="text-xs text-muted-foreground">Image Coming Soon</p>
-                            </div>
+                            ))}
+
+                            {/* Central accent element */}
+                            <div className="absolute inset-0 m-auto w-24 h-24 bg-primary/5 rounded-full blur-2xl -z-10" />
                         </div>
                     </div>
                 </div>

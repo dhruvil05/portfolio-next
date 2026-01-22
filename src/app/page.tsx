@@ -5,7 +5,6 @@ import Process from "@/components/home/Process";
 import ServicesPreview from "@/components/home/ServicesPreview";
 import IndustriesPreview from "@/components/home/IndustriesPreview";
 import CaseStudiesPreview from "@/components/home/CaseStudiesPreview";
-import Stats from "@/components/home/Stats";
 import FAQ from "@/components/home/FAQ";
 import CTA from "@/components/home/CTA";
 
@@ -19,7 +18,6 @@ export default function Home() {
       <ServicesPreview />
       <IndustriesPreview />
       <CaseStudiesPreview />
-      <Stats />
       <FAQ />
       <CTA />
     </>

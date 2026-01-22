@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { navigationItems } from "@/lib/navigation";
 import { siteConfig } from "@/lib/site";
 import MobileMenu from "./MobileMenu";
+import { Menu } from "lucide-react";
 
 
 export default function Header() {
@@ -41,12 +42,10 @@ export default function Header() {
                     <div className="flex items-center gap-2 md:hidden">
                         <button
                             onClick={() => setMobileMenuOpen(true)}
-                            className="p-2 text-foreground hover:text-primary transition-colors"
+                            className="p-2 text-foreground hover:text-primary transition-colors focus:outline-none"
                             aria-label="Open menu"
                         >
-                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                            </svg>
+                            <Menu size={28} strokeWidth={1.5} />
                         </button>
                     </div>
                 </div>
