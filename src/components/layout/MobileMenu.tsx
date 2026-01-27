@@ -5,109 +5,98 @@ import { usePathname } from "next/navigation";
 import { navigationItems } from "@/lib/navigation";
 import { siteConfig } from "@/lib/site";
 import { useEffect } from "react";
-import { X, Mail, Github, Linkedin, Twitter } from "lucide-react";
+import { X, ArrowRight, Instagram, Twitter, Linkedin, Github } from "lucide-react";
 
 interface MobileMenuProps {
     isOpen: boolean;
     onClose: () => void;
+    onToggle: () => void;
 }
 
-export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
+export default function MobileMenu({ isOpen, onClose, onToggle }: MobileMenuProps) {
     const pathname = usePathname();
 
-    // Prevent scrolling when menu is open
+    // Prevent body scroll when menu is open
     useEffect(() => {
         if (isOpen) {
             document.body.style.overflow = "hidden";
         } else {
             document.body.style.overflow = "unset";
         }
-        return () => {
-            document.body.style.overflow = "unset";
-        };
     }, [isOpen]);
 
-    if (!isOpen) return null;
-
     return (
-        <div className="fixed inset-0 z-[100] md:hidden">
-            {/* Absolute background covering every inch */}
-            <div className="absolute inset-0 bg-white" />
+        <div
+            className={`fixed inset-0 z-[100] bg-white transition-all duration-700 ease-[cubic-bezier(0.85,0,0.15,1)] ${isOpen ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0 pointer-events-none"
+                }`}
+        >
+            {/* Header within overlay */}
+            <div className="flex items-center justify-between px-6 h-20 border-b border-zinc-50">
+                <span className="text-xl font-medium tracking-tight text-zinc-900">
+                    {siteConfig.name}
+                </span>
+                <button
+                    onClick={onClose}
+                    className="flex items-center gap-2 group focus:outline-none"
+                    aria-label="Close menu"
+                >
+                    <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-zinc-900">
+                        Close
+                    </span>
+                    <X size={20} className="text-zinc-900" />
+                </button>
+            </div>
 
-            {/* Main Content Container */}
-            <div className="relative h-full w-full flex flex-col bg-white">
-                {/* Mobile Header (Matching main header height) */}
-                <div className="flex items-center justify-between px-6 h-16 md:h-20 border-b border-zinc-100">
-                    <Link
-                        href="/"
-                        onClick={onClose}
-                        className="text-xl font-bold tracking-tight text-zinc-900"
-                    >
-                        {siteConfig.name}
-                    </Link>
-                    <button
-                        onClick={onClose}
-                        className="p-2 text-zinc-900 hover:text-primary transition-colors focus:outline-none"
-                        aria-label="Close menu"
-                    >
-                        <X size={24} strokeWidth={2} />
-                    </button>
-                </div>
-
-                {/* Vertical Navigation */}
-                <nav className="flex-1 flex flex-col justify-center px-10 py-12 bg-white">
-                    <ul className="space-y-10">
-                        {navigationItems.map((item) => (
-                            <li key={item.href}>
-                                <Link
-                                    href={item.href}
-                                    onClick={onClose}
-                                    className={`text-4xl font-bold tracking-tight transition-colors ${pathname === item.href
-                                            ? "text-primary"
-                                            : "text-zinc-900 hover:text-primary"
-                                        }`}
-                                >
+            {/* Menu Content */}
+            <div className="h-full flex flex-col justify-between px-8 pt-12 pb-24">
+                <nav className="flex flex-col space-y-6">
+                    {navigationItems.map((item, index) => {
+                        const isActive = pathname === item.href;
+                        return (
+                            <Link
+                                key={item.href}
+                                href={item.href}
+                                onClick={onClose}
+                                className={`group flex items-center justify-between transition-all duration-500 ${isOpen ? "translate-x-0 opacity-100" : "-translate-x-10 opacity-0"
+                                    }`}
+                                style={{ transitionDelay: `${index * 50 + 200}ms` }}
+                            >
+                                <span className={`text-2xl font-medium tracking-tight ${isActive ? "text-primary" : "text-zinc-900"
+                                    }`}>
                                     {item.label}
-                                </Link>
-                            </li>
-                        ))}
-                    </ul>
+                                </span>
+                                <ArrowRight
+                                    size={32}
+                                    className={`transition-all duration-300 ${isActive ? "text-primary opacity-100" : "text-zinc-200 opacity-0 group-hover:opacity-100 group-hover:translate-x-2"
+                                        }`}
+                                />
+                            </Link>
+                        );
+                    })}
                 </nav>
 
-                {/* Minimalist Footer */}
-                <div className="p-10 border-t border-zinc-100 space-y-8">
-                    <div className="space-y-3">
-                        <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-400">
-                            Direct Contact
-                        </span>
-                        <a
-                            href={`mailto:${siteConfig.email}`}
-                            className="text-lg font-medium text-zinc-900 hover:text-primary transition-colors flex items-center gap-3"
-                        >
-                            <Mail size={18} className="text-primary" />
-                            {siteConfig.email}
-                        </a>
-                    </div>
+                {/* Footer Content */}
+                <div
+                    className={`space-y-10 transition-all duration-700 delay-500 ${isOpen ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
+                        }`}
+                >
+                    <div className="h-px w-full bg-zinc-100" />
 
-                    <div className="flex items-center gap-6">
-                        <a
-                            href="#"
-                            className="text-zinc-400 hover:text-primary transition-colors"
-                        >
-                            <Linkedin size={22} />
-                        </a>
-                        <a
-                            href="#"
-                            className="text-zinc-400 hover:text-primary transition-colors"
-                        >
-                            <Twitter size={22} />
-                        </a>
-                        <a
-                            href="#"
-                            className="text-zinc-400 hover:text-primary transition-colors"
-                        >
-                            <Github size={22} />
-                        </a>
+                    <div className="grid grid-cols-2 gap-8">
+                        <div className="space-y-4">
+                            <p className="text-[10px] uppercase tracking-widest text-zinc-400">Engineering Inquiries</p>
+                            <a href={`mailto:${siteConfig.email}`} className="text-lg font-medium text-zinc-900 underline decoration-primary/30 underline-offset-4">
+                                Contact Us
+                            </a>
+                        </div>
+                        <div className="space-y-4">
+                            <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-400">Social</p>
+                            <div className="flex gap-4">
+                                <Linkedin size={20} className="text-zinc-400 hover:text-primary transition-colors" />
+                                <Twitter size={20} className="text-zinc-400 hover:text-primary transition-colors" />
+                                <Github size={20} className="text-zinc-400 hover:text-primary transition-colors" />
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
